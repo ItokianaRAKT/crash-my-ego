@@ -16,9 +16,11 @@ in over a blurred editor.
   the punchline fades into the center in large white text
 - 🔗 Minimalist **Corriger mon code** link dismisses the blur and unlocks the
   editor
-- 🤖 Express backend calling **Groq** (`qwen/qwen3.8-27b` by default) for the
-  roast, with a built-in local fallback so the app stays usable without an API
-  key
+- 🤖 Express backend calling **Groq** through an ordered list of models
+  (`qwen/qwen3.8-27b`, `openai/gpt-oss-20b`, `openai/gpt-oss-120b`,
+  `allam-2-7b`) with automatic fallback to the next one when a model is
+  unavailable, plus a built-in local fallback so the app stays usable without
+  an API key
 
 ## 🛠️ Stack
 
@@ -55,7 +57,7 @@ npm run dev            # http://localhost:5173
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
-GROQ_MODEL=qwen/qwen3.8-27b
+GROQ_MODELS=qwen/qwen3.8-27b,openai/gpt-oss-20b,openai/gpt-oss-120b,allam-2-7b
 PORT=3000
 ```
 
@@ -104,11 +106,15 @@ Failure:
 { "error": "Service de mépris indisponible." }
 ```
 
-The server prompts the Groq model set in `GROQ_MODEL` (default
-`qwen/qwen3.8-27b`, fast and free — `llama3-8b-8192` has been decommissioned)
-with a strict system prompt (a senior, cold, contemptuous engineer who gives
-one short verdict and no solution) and answers `400` when `code` is missing,
-`500` with a themed message when Groq fails.
+The server walks the comma-separated `GROQ_MODELS` list (default
+`qwen/qwen3.8-27b`, `openai/gpt-oss-20b`, `openai/gpt-oss-120b`,
+`allam-2-7b` — all free and available on the key) with a strict system prompt
+(a senior, cold, contemptuous engineer who gives one short verdict and no
+solution). When a model is decommissioned, rate-limited or answers empty, the
+next one in the list is tried automatically; the last working model becomes
+the preferred one for the following requests. Only an auth failure (`401`/
+`403`) stops the chain. If every model fails, the server answers `500` with a
+themed message (`400` when `code` is missing).
 
 If the endpoint is unreachable or answers an error, `reviewApi.ts` falls back
 to a locally generated cynical review so the overlay still delivers the
