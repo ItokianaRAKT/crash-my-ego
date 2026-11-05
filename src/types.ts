@@ -52,4 +52,17 @@ export interface TitleBarProps {
   showWindowControls?: boolean;
 }
 
+export interface EditorCardProps {
+  code: string;
+  onChange: (nextCode: string) => void;
+  onSubmit: () => void;
+  isLoading: boolean;
+}
+
+export interface InsightsCardProps {
+  status: ReviewStatus;
+  message: string | null;
+  isSystemError: boolean;
+}
+
 export const CRASH_ERROR_CODE = '0x0000F41L';
