@@ -48,7 +48,7 @@ npm run dev      # http://localhost:5173
 | `src/components/TitleBar.tsx` | Reusable window title bar (blue / red variants)         |
 | `src/components/MainWindow.tsx` | Editor window with textarea and status bar action   |
 | `src/components/ErrorPopup.tsx` | Modal fatal error box displaying the review            |
-| `src/components/Taskbar.tsx`  | Bottom taskbar, Start button and live clock             |
+| `src/components/Taskbar.tsx`  | Bottom taskbar with task button and live clock          |
 | `src/components/icons/RetroIcons.tsx` | Hand-drawn Windows 95 style SVG icons         |
 
 ## 🔌 Backend contract

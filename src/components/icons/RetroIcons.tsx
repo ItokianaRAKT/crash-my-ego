@@ -18,24 +18,6 @@ const DEFAULT_SVG_ATTRIBUTES = {
   xmlns: 'http://www.w3.org/2000/svg',
 } as const;
 
-/** The waving four-colour Windows flag used by the Start button. */
-export function WindowsFlagIcon({ className }: RetroIconProps): JSX.Element {
-  return (
-    <svg
-      {...DEFAULT_SVG_ATTRIBUTES}
-      viewBox="0 0 16 16"
-      className={className}
-      fill="none"
-      shapeRendering="crispEdges"
-    >
-      <path d="M1 3.2 L6.8 1.8 L6.8 7 L1 7.6 Z" fill="#ff2222" />
-      <path d="M7.6 1.6 L15 0.6 L15 6.4 L7.6 7 Z" fill="#22a022" />
-      <path d="M1 8.4 L6.8 7.8 L6.8 13.4 L1 14.6 Z" fill="#2222d0" />
-      <path d="M7.6 7.8 L15 6.9 L15 13.2 L7.6 14.2 Z" fill="#f0d000" />
-    </svg>
-  );
-}
-
 /** Classic grey CRT monitor with a teal screen. */
 export function ComputerIcon({ className }: RetroIconProps): JSX.Element {
   return (
@@ -121,92 +103,4 @@ export function CriticalStopIcon({ className }: RetroIconProps): JSX.Element {
   );
 }
 
-/** Manila folder, for the "Programmes" start menu entry. */
-export function FolderIcon({ className }: RetroIconProps): JSX.Element {
-  return (
-    <svg
-      {...DEFAULT_SVG_ATTRIBUTES}
-      viewBox="0 0 16 16"
-      className={className}
-      fill="none"
-      shapeRendering="crispEdges"
-    >
-      <path d="M1 3.5 H6.2 L7.6 5.3 H15 V8 H1 Z" fill="#e8c840" stroke="#000000" />
-      <rect x="1" y="6.5" width="14" height="7.5" fill="#ffe870" stroke="#000000" />
-    </svg>
-  );
-}
 
-/** Mini application window, used for the CrashMyEgo start menu entry. */
-export function AppWindowIcon({ className }: RetroIconProps): JSX.Element {
-  return (
-    <svg
-      {...DEFAULT_SVG_ATTRIBUTES}
-      viewBox="0 0 16 16"
-      className={className}
-      fill="none"
-      shapeRendering="crispEdges"
-    >
-      <rect x="1.5" y="2.5" width="13" height="11" fill="#c0c0c0" stroke="#000000" />
-      <rect x="2.5" y="3.5" width="11" height="2.5" fill="#000080" />
-      <rect x="3.5" y="7.5" width="9" height="1.5" fill="#808080" />
-      <rect x="3.5" y="10" width="6" height="1.5" fill="#808080" />
-    </svg>
-  );
-}
-
-/** Control panel sliders, for the "Paramètres" start menu entry. */
-export function SettingsIcon({ className }: RetroIconProps): JSX.Element {
-  return (
-    <svg
-      {...DEFAULT_SVG_ATTRIBUTES}
-      viewBox="0 0 16 16"
-      className={className}
-      fill="none"
-      shapeRendering="crispEdges"
-    >
-      <rect x="1.5" y="3.5" width="13" height="9" fill="#c0c0c0" stroke="#000000" />
-      <rect x="3" y="5.5" width="10" height="1.5" fill="#808080" />
-      <rect x="3" y="9.5" width="10" height="1.5" fill="#808080" />
-      <rect x="5" y="4.7" width="2.5" height="3.1" fill="#ffffff" stroke="#000000" />
-      <rect x="9.5" y="8.7" width="2.5" height="3.1" fill="#ffffff" stroke="#000000" />
-    </svg>
-  );
-}
-
-/** Navy help badge with a white question mark. */
-export function HelpIcon({ className }: RetroIconProps): JSX.Element {
-  return (
-    <svg {...DEFAULT_SVG_ATTRIBUTES} viewBox="0 0 16 16" className={className} fill="none">
-      <rect x="1.5" y="1.5" width="13" height="13" fill="#000080" stroke="#000000" />
-      <text
-        x="8"
-        y="12"
-        fill="#ffffff"
-        fontFamily="Tahoma, Verdana, sans-serif"
-        fontSize="12"
-        fontWeight="bold"
-        textAnchor="middle"
-      >
-        ?
-      </text>
-    </svg>
-  );
-}
-
-/** Red power button, for the shutdown start menu entry. */
-export function PowerIcon({ className }: RetroIconProps): JSX.Element {
-  return (
-    <svg {...DEFAULT_SVG_ATTRIBUTES} viewBox="0 0 16 16" className={className} fill="none">
-      <circle cx="8" cy="8" r="6.5" fill="#c00000" stroke="#000000" />
-      <path d="M8 3.8 V8" stroke="#ffffff" strokeWidth="1.7" strokeLinecap="round" />
-      <path
-        d="M5.2 6.2 A3.6 3.6 0 1 0 10.8 6.2"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}

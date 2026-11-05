@@ -1,30 +1,6 @@
-import { useCallback, useEffect, useState, type ComponentType, type MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
 import type { TaskbarProps } from '../types';
-import type { RetroIconProps } from './icons/RetroIcons';
-import {
-  AppWindowIcon,
-  ComputerIcon,
-  FolderIcon,
-  HelpIcon,
-  PowerIcon,
-  SettingsIcon,
-  SpeakerIcon,
-  WindowsFlagIcon,
-} from './icons/RetroIcons';
-
-/** Entries of the mock Start menu — decorative, like the app menu strip. */
-interface StartMenuEntry {
-  icon: ComponentType<RetroIconProps>;
-  label: string;
-}
-
-const START_MENU_ENTRIES: readonly StartMenuEntry[] = [
-  { icon: FolderIcon, label: 'Programmes' },
-  { icon: AppWindowIcon, label: 'CrashMyEgo' },
-  { icon: SettingsIcon, label: 'Paramètres' },
-  { icon: HelpIcon, label: 'Aide' },
-  { icon: PowerIcon, label: 'Éteindre l’ordinateur…' },
-];
+import { ComputerIcon, SpeakerIcon } from './icons/RetroIcons';
 
 /** Pad a number so the clock always shows two digits. */
 function padToTwoDigits(value: number): string {
@@ -41,13 +17,11 @@ function formatClock(now: Date): string {
 }
 
 /**
- * Bottom taskbar: Start button with a collapsible mock menu, a pressed task
- * button showing the focused window and a system tray with a live clock that
- * refreshes every second.
+ * Bottom taskbar: a pressed task button showing the focused window and a
+ * system tray with a live clock that refreshes every second.
  */
 export function Taskbar({ activeWindowTitle }: TaskbarProps): JSX.Element {
   const [currentTime, setCurrentTime] = useState<string>(() => formatClock(new Date()));
-  const [isStartMenuOpen, setIsStartMenuOpen] = useState<boolean>(false);
 
   // Tick the clock once per second for the whole lifetime of the taskbar.
   useEffect(() => {
@@ -60,85 +34,11 @@ export function Taskbar({ activeWindowTitle }: TaskbarProps): JSX.Element {
     };
   }, []);
 
-  // Close the Start menu on outside click or Escape.
-  useEffect(() => {
-    if (!isStartMenuOpen) {
-      return undefined;
-    }
-
-    const handleDocumentClick = (): void => {
-      setIsStartMenuOpen(false);
-    };
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') {
-        setIsStartMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleDocumentClick);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isStartMenuOpen]);
-
-  const toggleStartMenu = useCallback((event: MouseEvent<HTMLButtonElement>): void => {
-    // Stop the document listener from closing the menu right after opening it.
-    event.stopPropagation();
-    setIsStartMenuOpen((isOpen) => !isOpen);
-  }, []);
-
   return (
     <footer
       aria-label="Barre des tâches"
       className="fixed inset-x-0 bottom-0 z-40 flex h-[30px] items-center gap-2 bg-[#c0c0c0] px-[3px] pb-[2px] shadow-[inset_0_3px_0_0_#808080,inset_0_2px_0_0_#ffffff]"
     >
-      {/* Start button + mock menu */}
-      <div className="relative shrink-0">
-        <button
-          type="button"
-          onClick={toggleStartMenu}
-          aria-expanded={isStartMenuOpen}
-          className="win95-button flex h-[24px] items-center gap-[4px] px-[6px] font-bold"
-          data-pressed={isStartMenuOpen}
-          title="Start"
-        >
-          <WindowsFlagIcon className="h-[15px] w-[15px]" />
-          Démarrer
-        </button>
-
-        {isStartMenuOpen ? (
-          <div
-            role="menu"
-            aria-label="Menu Démarrer"
-            onClick={(event) => event.stopPropagation()}
-            className="win95-raised absolute bottom-[100%] left-0 mb-[4px] flex w-[220px] bg-[#c0c0c0] p-[2px]"
-          >
-            {/* Vertical navy banner, like the real Windows 95 Start menu */}
-            <div className="flex w-[26px] shrink-0 items-end justify-center bg-gradient-to-b from-[#000080] to-[#1084d0] py-[6px]">
-              <span className="rotate-180 text-[11px] font-bold whitespace-nowrap text-white [writing-mode:vertical-rl]">
-                CrashMyEgo95
-              </span>
-            </div>
-
-            <ul className="flex-1 py-[2px]">
-              {START_MENU_ENTRIES.map(({ icon: EntryIcon, label }) => (
-                <li key={label}>
-                  <span className="flex cursor-default items-center gap-2 px-[8px] py-[5px] text-[12px] text-black hover:bg-[#000080] hover:text-white">
-                    <span aria-hidden="true" className="flex w-[16px] justify-center">
-                      <EntryIcon className="h-[14px] w-[14px]" />
-                    </span>
-                    {label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </div>
-
       {/* Focused window button (indicator, not a control) */}
       <div
         aria-label={`Fenêtre active : ${activeWindowTitle}`}
