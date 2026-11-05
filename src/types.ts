@@ -64,6 +64,10 @@ export interface ErrorPopupProps {
 export interface TaskbarProps {
   /** Label of the window currently shown as "focused" in the taskbar. */
   activeWindowTitle: string;
+  /** Current click volume, between 0 and 1. */
+  volume: number;
+  /** Called with the new volume when the tray slider is moved. */
+  onVolumeChange: (nextVolume: number) => void;
 }
 
 /** Props of `TitleBar`. */

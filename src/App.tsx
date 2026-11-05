@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   isApiErrorMessage,
   readReviewMessage,
   requestCodeReview,
 } from './api/reviewApi';
+import { setClickVolume } from './audio/mouseClick';
 import { ErrorPopup } from './components/ErrorPopup';
 import { MainWindow } from './components/MainWindow';
 import { Taskbar } from './components/Taskbar';
@@ -11,6 +12,9 @@ import type { ReviewStatus } from './types';
 
 /** Title shown in the taskbar and used by the desktop shell. */
 const APPLICATION_TITLE = 'CrashMyEgo - Revue de code.exe';
+
+/** Volume used by the window control click sound, between 0 and 1. */
+const DEFAULT_CLICK_VOLUME = 0.7;
 
 /**
  * Application shell: owns every piece of global state and the asynchronous
@@ -23,8 +27,18 @@ export default function App(): JSX.Element {
   const [reviewResult, setReviewResult] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSystemError, setIsSystemError] = useState<boolean>(false);
+  const [volume, setVolume] = useState<number>(DEFAULT_CLICK_VOLUME);
 
   const isLoading = status === 'loading';
+
+  // Keep the click sound in sync with the tray volume slider.
+  useEffect(() => {
+    setClickVolume(volume);
+  }, [volume]);
+
+  const handleVolumeChange = useCallback((nextVolume: number): void => {
+    setVolume(nextVolume);
+  }, []);
 
   const handleCodeChange = useCallback((nextCode: string): void => {
     setCode(nextCode);
@@ -87,7 +101,11 @@ export default function App(): JSX.Element {
         isSystemError={isSystemError}
       />
 
-      <Taskbar activeWindowTitle={APPLICATION_TITLE} />
+      <Taskbar
+        activeWindowTitle={APPLICATION_TITLE}
+        volume={volume}
+        onVolumeChange={handleVolumeChange}
+      />
     </div>
   );
 }

@@ -11,6 +11,8 @@ exactly what it thinks of your work.
 - 📝 Code editor window with sunken inset textarea
 - 💀 Fatal error popup (`0x0000F41L`) that delivers the review
 - 🕹️ Taskbar with a live clock ticking every second
+- 🔈 Clickable window controls that play a synthesised mouse click, plus an
+  adjustable volume slider in the system tray
 - 🔌 Works with a real `POST /api/review` backend **or** falls back to a
   built-in local review generator, so the app is usable out of the box
 
@@ -49,6 +51,8 @@ npm run dev      # http://localhost:5173
 | `src/components/MainWindow.tsx` | Editor window with textarea and status bar action   |
 | `src/components/ErrorPopup.tsx` | Modal fatal error box displaying the review            |
 | `src/components/Taskbar.tsx`  | Bottom taskbar with task button and live clock          |
+| `src/components/VolumeSlider.tsx` | Vertical tray volume slider (drag, click, arrow keys) |
+| `src/audio/mouseClick.ts`     | Synthesised mouse click sound and its volume            |
 | `src/components/icons/RetroIcons.tsx` | Hand-drawn Windows 95 style SVG icons         |
 
 ## 🔌 Backend contract
