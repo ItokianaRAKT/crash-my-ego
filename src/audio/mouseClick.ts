@@ -1,7 +1,6 @@
 let audioContext: AudioContext | null = null;
 let clickVolume = 0.7;
 
-/** Set the volume used by every subsequent mouse click (0 → 1). */
 export function setClickVolume(volume: number): void {
   clickVolume = Math.min(1, Math.max(0, volume));
 }
@@ -13,10 +12,6 @@ function getAudioContext(): AudioContext {
   return audioContext;
 }
 
-/**
- * Play a short mechanical mouse click synthesised on the fly, so the app
- * needs no audio asset. Respects the current click volume.
- */
 export function playMouseClick(): void {
   if (clickVolume <= 0) {
     return;

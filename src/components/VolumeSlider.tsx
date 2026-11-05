@@ -15,11 +15,8 @@ const KEYBOARD_STEP = 0.05;
 const PAGE_STEP = 0.2;
 
 export interface VolumeSliderProps {
-  /** Current volume between 0 and 1. */
   volume: number;
-  /** Called with the new volume while the slider is moved. */
   onVolumeChange: (nextVolume: number) => void;
-  /** Called when the slider panel should disappear. */
   onClose: () => void;
 }
 
@@ -31,10 +28,6 @@ function roundToStep(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-/**
- * Vertical Windows 95 style volume slider shown above the system tray.
- * Drag the handle, click the track or use the arrow keys to change it.
- */
 export function VolumeSlider({
   volume,
   onVolumeChange,
@@ -43,7 +36,6 @@ export function VolumeSlider({
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  // Escape closes the panel.
   useEffect(() => {
     const handleKeyDown = (event: globalThis.KeyboardEvent): void => {
       if (event.key === 'Escape') {

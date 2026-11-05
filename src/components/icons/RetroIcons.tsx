@@ -1,13 +1,3 @@
-/**
- * Hand-drawn Windows 95 style icons.
- *
- * Everything here is plain inline SVG so the app keeps its retro look
- * without pulling an icon package into the dependency tree. Each icon is
- * drawn on a 16×16 grid (the CriticalStop icon uses 32×32 for extra detail)
- * with the flat, low-colour palette of the original system icons.
- */
-
-/** Props shared by every retro icon: only a className for sizing. */
 export interface RetroIconProps {
   className?: string;
 }
@@ -18,7 +8,6 @@ const DEFAULT_SVG_ATTRIBUTES = {
   xmlns: 'http://www.w3.org/2000/svg',
 } as const;
 
-/** Classic grey CRT monitor with a teal screen. */
 export function ComputerIcon({ className }: RetroIconProps): JSX.Element {
   return (
     <svg
@@ -36,7 +25,6 @@ export function ComputerIcon({ className }: RetroIconProps): JSX.Element {
   );
 }
 
-/** Loudspeaker with two sound waves, for the system tray. */
 export function SpeakerIcon({ className }: RetroIconProps): JSX.Element {
   return (
     <svg {...DEFAULT_SVG_ATTRIBUTES} viewBox="0 0 16 16" className={className} fill="none">
@@ -47,7 +35,6 @@ export function SpeakerIcon({ className }: RetroIconProps): JSX.Element {
   );
 }
 
-/** Red and white eraser, for the "Effacer" toolbar button. */
 export function EraserIcon({ className }: RetroIconProps): JSX.Element {
   return (
     <svg
@@ -66,7 +53,6 @@ export function EraserIcon({ className }: RetroIconProps): JSX.Element {
   );
 }
 
-/** Yellow warning triangle with an exclamation mark. */
 export function WarningIcon({ className }: RetroIconProps): JSX.Element {
   return (
     <svg
@@ -83,11 +69,6 @@ export function WarningIcon({ className }: RetroIconProps): JSX.Element {
   );
 }
 
-/**
- * Red "critical stop" disc with a white cross — the classic fatal error
- * symbol used by the crash popup. Drawn on a 32×32 grid so it stays crisp
- * when displayed at 48–56 px.
- */
 export function CriticalStopIcon({ className }: RetroIconProps): JSX.Element {
   return (
     <svg {...DEFAULT_SVG_ATTRIBUTES} viewBox="0 0 32 32" className={className} fill="none">
@@ -102,5 +83,3 @@ export function CriticalStopIcon({ className }: RetroIconProps): JSX.Element {
     </svg>
   );
 }
-
-

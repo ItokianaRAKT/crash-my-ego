@@ -2,12 +2,6 @@ import { useCallback } from 'react';
 import { playMouseClick } from '../audio/mouseClick';
 import type { TitleBarProps } from '../types';
 
-/**
- * Windows 95 style title bar.
- *
- * The three window controls are real buttons: each one plays a mechanical
- * mouse click. The ✕ control additionally runs `onClose` when provided.
- */
 export function TitleBar({
   title,
   variant,

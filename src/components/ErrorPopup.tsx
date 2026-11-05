@@ -4,18 +4,12 @@ import { CRASH_ERROR_CODE } from '../types';
 import { TitleBar } from './TitleBar';
 import { CriticalStopIcon } from './icons/RetroIcons';
 
-/**
- * Fatal error popup: a modal overlay holding a classic Windows 95 crash box.
- * It receives the review text (or a system failure message) and displays it
- * inside a protected white well.
- */
 export function ErrorPopup({
   isOpen,
   onClose,
   message,
   isSystemError,
 }: ErrorPopupProps): JSX.Element | null {
-  // Escape closes the dialog, like any real modal.
   useEffect(() => {
     if (!isOpen) {
       return undefined;
@@ -33,7 +27,6 @@ export function ErrorPopup({
     };
   }, [isOpen, onClose]);
 
-  // Clicking the dimmed desktop dismisses the popup as well.
   const handleOverlayClick = useCallback(
     (event: MouseEvent<HTMLDivElement>): void => {
       if (event.target === event.currentTarget) {
@@ -44,7 +37,6 @@ export function ErrorPopup({
   );
 
   const handleDialogClick = useCallback((event: MouseEvent<HTMLDivElement>): void => {
-    // Keep clicks inside the box from bubbling up to the overlay.
     event.stopPropagation();
   }, []);
 
@@ -81,7 +73,6 @@ export function ErrorPopup({
         />
 
         <div className="flex items-start gap-4 px-4 pt-4">
-          {/* Prominent circular error icon */}
           <CriticalStopIcon className="h-[52px] w-[52px] shrink-0" />
 
           <div className="min-w-0 pt-1">
@@ -99,7 +90,6 @@ export function ErrorPopup({
           </div>
         </div>
 
-        {/* Protected white box holding the backend answer */}
         <div className="px-4 pt-3 pb-1">
           <div
             aria-label="Contenu de la revue"
