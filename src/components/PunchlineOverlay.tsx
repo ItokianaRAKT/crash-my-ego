@@ -27,7 +27,7 @@ export function PunchlineOverlay({
       ) : (
         <div className="flex flex-col items-center gap-7">
           <p className="text-[11px] tracking-[0.34em] text-zinc-500 uppercase animate-fade-in">
-            {isSystemError ? 'System diagnostic' : 'Verdict'}
+            {isSystemError ? 'Diagnostic système' : 'Verdict'}
             <span className="ml-3 text-zinc-700">{CRASH_ERROR_CODE}</span>
           </p>
 
@@ -40,7 +40,7 @@ export function PunchlineOverlay({
             onClick={onDismiss}
             className="text-[13px] tracking-[0.16em] text-zinc-400 uppercase underline-offset-8 transition hover:text-white hover:underline animate-fade-in-slow"
           >
-            Fix my code
+            Corriger mon code
           </button>
         </div>
       )}

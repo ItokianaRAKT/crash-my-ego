@@ -7,7 +7,6 @@ import {
 import { EditorCard } from './components/EditorCard';
 import { PunchlineOverlay } from './components/PunchlineOverlay';
 import type { ReviewStatus } from './types';
-import { CRASH_ERROR_CODE } from './types';
 
 export default function App(): JSX.Element {
   const [code, setCode] = useState<string>('');
@@ -74,10 +73,10 @@ export default function App(): JSX.Element {
       <main className="mx-auto flex min-h-0 w-full max-w-5xl flex-1 flex-col px-6 py-6">
         <div className="mb-6 flex flex-col gap-2">
           <p className="font-mono text-[11px] tracking-[0.3em] text-zinc-500 uppercase">
-            Code review terminal
+            Terminal de revue de code
           </p>
           <h1 className="max-w-2xl text-xl leading-tight font-medium tracking-tight text-white sm:text-2xl">
-            Paste your code. Get told exactly what it thinks of it.
+            Collez votre code. Obtenez exactement ce qu'il en pense.
           </h1>
         </div>
 
@@ -103,8 +102,7 @@ export default function App(): JSX.Element {
 
       <footer className="shrink-0 border-t border-zinc-900">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-4 font-mono text-[11px] text-zinc-600">
-          <span>CrashMyEgo — your code called, it wants a lawyer.</span>
-          <span>{CRASH_ERROR_CODE}</span>
+          <span>CrashMyEgo — votre code a appelé, il veut un avocat.</span>
         </div>
       </footer>
     </div>
