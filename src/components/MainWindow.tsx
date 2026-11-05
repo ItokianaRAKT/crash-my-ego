@@ -50,7 +50,7 @@ export function MainWindow({
   return (
     <section
       aria-label="Fenêtre de saisie de code"
-      className="win95-raised pointer-events-auto flex h-full max-h-[560px] w-full max-w-3xl flex-col bg-[#c0c0c0] p-[3px]"
+      className="win95-raised flex h-full w-full flex-col bg-[#c0c0c0] p-[3px]"
     >
       <TitleBar title="CrashMyEgo - Revue de code.exe" variant="system" />
 
