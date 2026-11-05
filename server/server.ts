@@ -8,7 +8,7 @@ dotenv.config();
 
 const PORT = Number(process.env.PORT ?? 3000);
 const FRONTEND_ORIGIN = 'http://localhost:5173';
-const GROQ_MODEL = 'llama3-8b-8192';
+const GROQ_MODEL = process.env.GROQ_MODEL ?? 'qwen/qwen3.8-27b';
 
 const SYSTEM_PROMPT =
   'Tu es un ingénieur senior ultra-cynique, clinique, froid et méprisant. Analyse le code fourni et donne une seule remarque courte (maximum 2 phrases), extrêmement cinglante et piquante sur pourquoi ce code est médiocre. Ne sois pas constructif. Ne donne aucune solution. Sois juste cassant, froid et supérieur.';
