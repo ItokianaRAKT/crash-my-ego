@@ -6,7 +6,8 @@ exactly what it thinks of your work.
 
 ## ✨ Features
 
-- 🖥️ Authentic Windows 95 desktop (`#008080` teal), 3D bevels, title bar gradients
+- 🖥️ Window-only layout: the `CrashMyEgo - Revue de code.exe` window fills the
+  viewport above the taskbar (classic `#008080` teal shell, 3D bevels, title bar gradients)
 - 📝 Code editor window with sunken inset textarea
 - 💀 Fatal error popup (`0x0000F41L`) that delivers the review
 - 🕹️ Taskbar with a live clock ticking every second
@@ -18,7 +19,8 @@ exactly what it thinks of your work.
 - React 18 (functional components + hooks)
 - TypeScript (strict, no `any`)
 - Tailwind CSS (custom `win95-*` bevel tokens)
-- Icons: retro system emojis only — no icon package to install
+- Icons: hand-drawn inline SVG in the classic Windows 95 style — no icon
+  package to install
 
 ## 🚀 Getting started
 
@@ -44,9 +46,10 @@ npm run dev      # http://localhost:5173
 | `src/types.ts`                | Shared interfaces and API state union                   |
 | `src/api/reviewApi.ts`        | `POST /api/review` with local fallback                  |
 | `src/components/TitleBar.tsx` | Reusable window title bar (blue / red variants)         |
-| `src/components/MainWindow.tsx` | Editor window with textarea and submit button         |
+| `src/components/MainWindow.tsx` | Editor window with textarea and status bar action   |
 | `src/components/ErrorPopup.tsx` | Modal fatal error box displaying the review            |
 | `src/components/Taskbar.tsx`  | Bottom taskbar, Start button and live clock             |
+| `src/components/icons/RetroIcons.tsx` | Hand-drawn Windows 95 style SVG icons         |
 
 ## 🔌 Backend contract
 
