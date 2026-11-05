@@ -71,8 +71,12 @@ export interface TitleBarProps {
   title: string;
   /** `system` = navy gradient, `error` = deep red gradient. */
   variant: 'system' | 'error';
-  onClose: () => void;
-  /** Hide the minimize / maximize buttons (used by modal popups). */
+  /**
+   * When provided, the ✕ control becomes a real button. When omitted the
+   * window controls stay decorative.
+   */
+  onClose?: () => void;
+  /** Hide the minimize / maximize / close controls entirely. */
   showWindowControls?: boolean;
 }
 
