@@ -54,6 +54,7 @@ npm run dev            # http://localhost:5173
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=qwen/qwen3.8-27b
 PORT=3000
 ```
 
@@ -102,10 +103,11 @@ Failure:
 { "error": "Service de mépris indisponible." }
 ```
 
-The server prompts `llama3-8b-8192` with a strict system prompt (a senior,
-cold, contemptuous engineer who gives one short verdict and no solution) and
-answers `400` when `code` is missing, `500` with a themed message when Groq
-fails.
+The server prompts the Groq model set in `GROQ_MODEL` (default
+`qwen/qwen3.8-27b`, fast and free — `llama3-8b-8192` has been decommissioned)
+with a strict system prompt (a senior, cold, contemptuous engineer who gives
+one short verdict and no solution) and answers `400` when `code` is missing,
+`500` with a themed message when Groq fails.
 
 If the endpoint is unreachable or answers an error, `reviewApi.ts` falls back
 to a locally generated cynical review so the overlay still delivers the
