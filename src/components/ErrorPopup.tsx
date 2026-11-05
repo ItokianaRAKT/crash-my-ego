@@ -2,6 +2,7 @@ import { useCallback, useEffect, type MouseEvent } from 'react';
 import type { ErrorPopupProps } from '../types';
 import { CRASH_ERROR_CODE } from '../types';
 import { TitleBar } from './TitleBar';
+import { CriticalStopIcon } from './icons/RetroIcons';
 
 /**
  * Fatal error popup: a modal overlay holding a classic Windows 95 crash box.
@@ -81,12 +82,7 @@ export function ErrorPopup({
 
         <div className="flex items-start gap-4 px-4 pt-4">
           {/* Prominent circular error icon */}
-          <span
-            aria-hidden="true"
-            className="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border-2 border-[#808080] bg-white text-[32px] leading-none shadow-[inset_-2px_-2px_0px_0px_#dfdfdf,inset_2px_2px_0px_0px_#ffffff]"
-          >
-            ❌
-          </span>
+          <CriticalStopIcon className="h-[52px] w-[52px] shrink-0" />
 
           <div className="min-w-0 pt-1">
             <p
