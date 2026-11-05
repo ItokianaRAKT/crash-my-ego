@@ -76,7 +76,7 @@ export default function App(): JSX.Element {
             Terminal de revue de code
           </p>
           <h1 className="max-w-2xl text-xl leading-tight font-medium tracking-tight text-white sm:text-2xl">
-            Collez votre code. Obtenez exactement ce qu'il en pense.
+            Collez votre code. Obtenez un avis rapide.
           </h1>
         </div>
 
