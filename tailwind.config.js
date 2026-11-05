@@ -3,11 +3,6 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      colors: {
-        canvas: '#09090b',
-        surface: '#0d1117',
-        'surface-muted': '#0a0a0c',
-      },
       fontFamily: {
         sans: [
           'Inter',
@@ -30,23 +25,19 @@ export default {
         ],
       },
       keyframes: {
-        'fade-in-up': {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         shimmer: {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
-        'pulse-dot': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.35' },
-        },
       },
       animation: {
-        'fade-in-up': 'fade-in-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both',
-        shimmer: 'shimmer 1.5s linear infinite',
-        'pulse-dot': 'pulse-dot 1.4s ease-in-out infinite',
+        'fade-in': 'fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'fade-in-slow': 'fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both',
+        shimmer: 'shimmer 1.4s linear infinite',
       },
     },
   },

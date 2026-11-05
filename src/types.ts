@@ -19,12 +19,14 @@ export interface EditorCardProps {
   onChange: (nextCode: string) => void;
   onSubmit: () => void;
   isLoading: boolean;
+  isBlurred: boolean;
 }
 
-export interface InsightsCardProps {
+export interface PunchlineOverlayProps {
   status: ReviewStatus;
   message: string | null;
   isSystemError: boolean;
+  onDismiss: () => void;
 }
 
 export const CRASH_ERROR_CODE = '0x0000F41L';
