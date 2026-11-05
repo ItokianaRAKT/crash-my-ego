@@ -89,7 +89,7 @@ export function EditorCard({
   return (
     <section
       aria-hidden={isBlurred}
-      className={`flex min-w-0 flex-col rounded-md border border-zinc-900 bg-[#0c0c0c] transition duration-300 ${
+      className={`flex h-full min-w-0 flex-col rounded-md border border-zinc-900 bg-[#0c0c0c] transition duration-300 ${
         isBlurred ? 'pointer-events-none scale-[1.01]' : ''
       }`}
     >
@@ -136,7 +136,7 @@ export function EditorCard({
           spellCheck={false}
           aria-label="Code à reviewer"
           placeholder={'// Paste the code you are proud of…\nfunction add(a, b) {\n  return a + b;\n}'}
-          className="min-h-[440px] w-full flex-1 resize-none overflow-auto bg-transparent px-5 py-4 font-mono text-[13px] leading-6 text-white caret-white outline-none placeholder:text-zinc-600"
+          className="min-h-0 w-full flex-1 resize-none overflow-auto bg-transparent px-5 py-4 font-mono text-[13px] leading-6 text-white caret-white outline-none placeholder:text-zinc-600"
         />
       </div>
 
