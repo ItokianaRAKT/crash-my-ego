@@ -16,8 +16,9 @@ in over a blurred editor.
   the punchline fades into the center in large white text
 - 🔗 Minimalist **Corriger mon code** link dismisses the blur and unlocks the
   editor
-- 🤖 Express backend calling **Groq** (`llama3-8b-8192`) for the roast, with a
-  built-in local fallback so the app stays usable without an API key
+- 🤖 Express backend calling **Groq** (`qwen/qwen3.8-27b` by default) for the
+  roast, with a built-in local fallback so the app stays usable without an API
+  key
 
 ## 🛠️ Stack
 
