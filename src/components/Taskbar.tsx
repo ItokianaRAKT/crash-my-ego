@@ -1,18 +1,29 @@
-import { useCallback, useEffect, useState, type MouseEvent } from 'react';
+import { useCallback, useEffect, useState, type ComponentType, type MouseEvent } from 'react';
 import type { TaskbarProps } from '../types';
+import type { RetroIconProps } from './icons/RetroIcons';
+import {
+  AppWindowIcon,
+  ComputerIcon,
+  FolderIcon,
+  HelpIcon,
+  PowerIcon,
+  SettingsIcon,
+  SpeakerIcon,
+  WindowsFlagIcon,
+} from './icons/RetroIcons';
 
 /** Entries of the mock Start menu — decorative, like the app menu strip. */
 interface StartMenuEntry {
-  icon: string;
+  icon: ComponentType<RetroIconProps>;
   label: string;
 }
 
 const START_MENU_ENTRIES: readonly StartMenuEntry[] = [
-  { icon: '💻', label: 'Programmes' },
-  { icon: '📝', label: 'CrashMyEgo' },
-  { icon: '⚙️', label: 'Paramètres' },
-  { icon: '❓', label: 'Aide' },
-  { icon: '🔌', label: 'Éteindre l’ordinateur…' },
+  { icon: FolderIcon, label: 'Programmes' },
+  { icon: AppWindowIcon, label: 'CrashMyEgo' },
+  { icon: SettingsIcon, label: 'Paramètres' },
+  { icon: HelpIcon, label: 'Aide' },
+  { icon: PowerIcon, label: 'Éteindre l’ordinateur…' },
 ];
 
 /** Pad a number so the clock always shows two digits. */
@@ -94,9 +105,7 @@ export function Taskbar({ activeWindowTitle }: TaskbarProps): JSX.Element {
           data-pressed={isStartMenuOpen}
           title="Start"
         >
-          <span aria-hidden="true" className="text-[14px] leading-none">
-            💻
-          </span>
+          <WindowsFlagIcon className="h-[15px] w-[15px]" />
           Démarrer
         </button>
 
@@ -115,13 +124,13 @@ export function Taskbar({ activeWindowTitle }: TaskbarProps): JSX.Element {
             </div>
 
             <ul className="flex-1 py-[2px]">
-              {START_MENU_ENTRIES.map((entry) => (
-                <li key={entry.label}>
+              {START_MENU_ENTRIES.map(({ icon: EntryIcon, label }) => (
+                <li key={label}>
                   <span className="flex cursor-default items-center gap-2 px-[8px] py-[5px] text-[12px] text-black hover:bg-[#000080] hover:text-white">
-                    <span aria-hidden="true" className="w-[18px] text-center text-[13px]">
-                      {entry.icon}
+                    <span aria-hidden="true" className="flex w-[16px] justify-center">
+                      <EntryIcon className="h-[14px] w-[14px]" />
                     </span>
-                    {entry.label}
+                    {label}
                   </span>
                 </li>
               ))}
@@ -135,8 +144,8 @@ export function Taskbar({ activeWindowTitle }: TaskbarProps): JSX.Element {
         aria-label={`Fenêtre active : ${activeWindowTitle}`}
         className="win95-sunken-thin flex h-[24px] min-w-0 flex-1 items-center gap-2 bg-[#c0c0c0] px-[6px] py-[2px] text-left text-[11px] font-bold shadow-[inset_1px_1px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#dfdfdf]"
       >
-        <span aria-hidden="true" className="text-[12px] leading-none">
-          💀
+        <span className="flex w-[16px] justify-center">
+          <ComputerIcon className="h-[14px] w-[14px]" />
         </span>
         <span className="truncate">{activeWindowTitle}</span>
       </div>
@@ -146,8 +155,8 @@ export function Taskbar({ activeWindowTitle }: TaskbarProps): JSX.Element {
         aria-label="Zone de notification"
         className="win95-sunken-thin flex h-[24px] shrink-0 items-center gap-[6px] bg-[#c0c0c0] px-[6px] py-[2px]"
       >
-        <span aria-hidden="true" title="Volume" className="text-[13px] leading-none">
-          🔊
+        <span aria-hidden="true" title="Volume" className="flex">
+          <SpeakerIcon className="h-[13px] w-[13px]" />
         </span>
         <time
           dateTime={new Date().toISOString()}

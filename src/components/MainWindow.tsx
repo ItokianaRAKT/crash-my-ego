@@ -1,6 +1,7 @@
 import { useCallback, type ChangeEvent, type KeyboardEvent } from 'react';
 import type { MainWindowProps } from '../types';
 import { TitleBar } from './TitleBar';
+import { EraserIcon, WarningIcon } from './icons/RetroIcons';
 
 /** Menu entries rendered statically, like a real Win95 application. */
 const MENU_ENTRIES: readonly string[] = ['Fichier', 'Édition', 'Affichage', 'Aide'];
@@ -75,7 +76,7 @@ export function MainWindow({
           disabled={isLoading || code.length === 0}
           className="win95-button flex items-center gap-1"
         >
-          <span aria-hidden="true">🧹</span>
+          <EraserIcon className="h-[14px] w-[14px]" />
           Effacer
         </button>
 
@@ -110,7 +111,7 @@ export function MainWindow({
           disabled={isSubmitDisabled}
           className="win95-button flex shrink-0 items-center gap-1 font-bold"
         >
-          <span aria-hidden="true">{isLoading ? '⏳' : '💀'}</span>
+          <WarningIcon className="h-[14px] w-[14px]" />
           {isLoading ? 'Calcul du mépris...' : 'Soumettre au mépris'}
         </button>
       </div>
