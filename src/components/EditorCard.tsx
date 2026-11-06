@@ -132,7 +132,7 @@ export function EditorCard({
           wrap="off"
           spellCheck={false}
           aria-label="Zone de code à relire"
-          placeholder={'// Collez ici le code que vous assumez…\nfunction add(a, b) {\n  return a + b;\n}'}
+          placeholder={'function add(a, b) {\n  return a + b;\n}'}
           className="min-h-0 w-full flex-1 resize-none overflow-auto bg-transparent px-5 py-4 font-mono text-[13px] leading-6 text-white caret-white outline-none placeholder:text-zinc-600"
         />
       </div>
