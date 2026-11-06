@@ -5,20 +5,20 @@ import {
   requestCodeReview,
 } from './api/reviewApi';
 import { EditorCard } from './components/EditorCard';
-import { InsightsCard } from './components/InsightsCard';
+import { PunchlineOverlay } from './components/PunchlineOverlay';
 import { TerminalIcon } from './components/icons/ModernIcons';
 import type { ReviewStatus } from './types';
+import { CRASH_ERROR_CODE } from './types';
 
 interface HeaderStatusMeta {
   label: string;
-  dotClassName: string;
 }
 
 const HEADER_STATUS: Record<ReviewStatus, HeaderStatusMeta> = {
-  idle: { label: 'Ready', dotClassName: 'bg-zinc-500' },
-  loading: { label: 'Reviewing', dotClassName: 'bg-indigo-400 animate-pulse-dot' },
-  success: { label: 'Complete', dotClassName: 'bg-emerald-400' },
-  error: { label: 'Error', dotClassName: 'bg-rose-400' },
+  idle: { label: 'Ready' },
+  loading: { label: 'Reviewing' },
+  success: { label: 'Complete' },
+  error: { label: 'Failed' },
 };
 
 export default function App(): JSX.Element {
@@ -28,6 +28,7 @@ export default function App(): JSX.Element {
   const [isSystemError, setIsSystemError] = useState<boolean>(false);
 
   const isLoading = status === 'loading';
+  const isOverlayOpen = status !== 'idle';
   const headerStatus = HEADER_STATUS[status];
 
   const handleCodeChange = useCallback((nextCode: string): void => {
@@ -58,66 +59,75 @@ export default function App(): JSX.Element {
     }
   }, [code, status]);
 
-  return (
-    <div className="relative min-h-screen bg-canvas text-zinc-200">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 bg-[radial-gradient(80%_50%_at_50%_-10%,rgba(99,102,241,0.18),transparent_60%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 bg-[radial-gradient(55%_40%_at_100%_0%,rgba(168,85,247,0.10),transparent_55%)]"
-      />
+  const handleDismiss = useCallback((): void => {
+    setStatus('idle');
+    setReviewResult(null);
+    setIsSystemError(false);
+  }, []);
 
-      <header className="relative border-b border-zinc-800/80 bg-canvas/70 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+  return (
+    <div className="flex min-h-screen flex-col bg-[#0a0a0a] text-white">
+      <header className="border-b border-zinc-900">
+        <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-6">
           <div className="flex min-w-0 items-center gap-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-base font-bold text-white shadow-lg shadow-indigo-500/25">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-white font-mono text-[13px] leading-none font-bold text-black">
               !
             </span>
-            <div className="min-w-0">
-              <p className="flex items-center gap-2 text-sm font-semibold text-white">
-                CrashMyEgo
-                <span className="hidden rounded-md border border-zinc-800 bg-zinc-900/70 px-1.5 py-0.5 font-mono text-[10px] font-medium text-zinc-500 sm:inline">
-                  v0.1.0
-                </span>
-              </p>
-              <p className="truncate text-xs text-zinc-500">
-                Passive-aggressive code review
-              </p>
-            </div>
+            <span className="text-[13px] font-semibold tracking-tight text-white">
+              CrashMyEgo
+            </span>
+            <span className="hidden font-mono text-[11px] text-zinc-600 sm:inline">
+              v0.1.0
+            </span>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-400">
-              <span className={`h-1.5 w-1.5 rounded-full ${headerStatus.dotClassName}`} />
+          <div className="flex shrink-0 items-center gap-5">
+            <span className="font-mono text-[11px] tracking-[0.16em] text-zinc-500 uppercase">
               {headerStatus.label}
             </span>
-            <span className="hidden items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-500 md:inline-flex">
+            <span className="hidden items-center gap-2 font-mono text-[11px] text-zinc-600 md:flex">
               <TerminalIcon className="h-3.5 w-3.5" />
-              <span className="font-mono">POST /api/review</span>
+              POST /api/review
             </span>
           </div>
         </div>
       </header>
 
-      <main className="relative mx-auto grid w-full max-w-7xl gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:items-start">
-        <EditorCard
-          code={code}
-          onChange={handleCodeChange}
-          onSubmit={handleSubmit}
-          isLoading={isLoading}
-        />
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10 sm:py-14">
+        <div className="mb-8 flex flex-col gap-3">
+          <p className="font-mono text-[11px] tracking-[0.3em] text-zinc-500 uppercase">
+            Code review terminal
+          </p>
+          <h1 className="max-w-2xl text-2xl leading-tight font-medium tracking-tight text-white sm:text-3xl">
+            Paste your code. Get told exactly what it thinks of it.
+          </h1>
+        </div>
 
-        <InsightsCard
-          status={status}
-          message={reviewResult}
-          isSystemError={isSystemError}
-        />
+        <div className="relative">
+          <EditorCard
+            code={code}
+            onChange={handleCodeChange}
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            isBlurred={isOverlayOpen}
+          />
+
+          {isOverlayOpen ? (
+            <PunchlineOverlay
+              status={status}
+              message={reviewResult}
+              isSystemError={isSystemError}
+              onDismiss={handleDismiss}
+            />
+          ) : null}
+        </div>
       </main>
 
-      <footer className="relative mx-auto max-w-7xl px-4 pb-8 text-center text-[11px] text-zinc-600 sm:px-6">
-        CrashMyEgo — your code called, it wants a lawyer.
+      <footer className="border-t border-zinc-900">
+        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-4 font-mono text-[11px] text-zinc-600">
+          <span>CrashMyEgo — your code called, it wants a lawyer.</span>
+          <span>{CRASH_ERROR_CODE}</span>
+        </div>
       </footer>
     </div>
   );
