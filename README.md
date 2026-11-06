@@ -119,3 +119,40 @@ themed message (`400` when `code` is missing).
 If the endpoint is unreachable or answers an error, `reviewApi.ts` falls back
 to a locally generated cynical review so the overlay still delivers the
 punchline.
+
+## 🔒 Security
+
+Hardening based on the [OWASP Top 10](https://owasp.org/Top10/):
+
+- **A01 — Broken access control**: CORS restricted to `http://localhost:5173`,
+  `X-Frame-Options: DENY` and a `Cross-Origin-Resource-Policy` header block
+  framing and cross-origin embedding.
+- **A02 — Cryptographic failures**: no secrets in the client bundle; the Groq
+  key stays server-side in `.env` (gitignored) and is never echoed in responses
+  or logs.
+- **A03 — Injection**: user code is wrapped in `<code_to_review>` delimiters
+  with an explicit system-prompt rule to treat it as text to comment, never as
+  instructions (prompt injection); input is validated (`code` must be a
+  non-empty string under 20 000 characters) and JSON bodies are capped at
+  100 kb.
+- **A04 — Insecure design**: in-memory rate limiting (20 requests per minute
+  per IP, `429` with `Retry-After`), a 30 s timeout on every Groq call, and
+  generic error messages that never leak stack traces.
+- **A05 — Security misconfiguration**: `X-Powered-By` disabled, security
+  headers (`nosniff`, `Referrer-Policy: no-referrer`, `Permissions-Policy`,
+  `Cross-Origin-Opener-Policy`) set on every response, JSON-only `404`/`500`
+  handlers, and a Content Security Policy in `index.html`
+  (`default-src 'self'`, no `object-src`, no inline scripts).
+- **A06 — Vulnerable components**: `npm audit` runs clean (the advisory on
+  `esbuild` through Vite was cleared by upgrading to Vite 6).
+- **A07 — Identification failures**: the API is anonymous by design (a local
+  single-user dev tool) and relies on rate limiting to blunt abuse.
+- **A08 — Software integrity**: dependencies are locked in `package-lock.json`
+  and scripts run through `allowScripts` so install scripts stay explicit.
+- **A09 — Logging failures**: logs carry model failures and request errors
+  only — never the API key or the submitted code.
+- **A10 — SSRF**: the server only calls `api.groq.com` through the official
+  SDK; no user-supplied URL is ever fetched.
+
+Client side, the editor enforces `maxLength="20000"` so oversized payloads are
+rejected before they leave the browser.
