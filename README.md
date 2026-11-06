@@ -10,19 +10,24 @@ in over a blurred editor.
   text, muted zinc secondary text, hairline `zinc-900` borders — zero accents
 - 📝 Editor as the center of attention: full-width card, line-number gutter
   synced with the textarea, live `Ln/Col` status bar, `Ctrl + Enter` submit
-- ⚪ Solid white **Review Code** action button (`bg-white text-black`)
+- ⚪ Solid white **Lancer la revue** action button (`bg-white text-black`)
 - 🌫️ Core effect: the review never lands in a box — a full-container
   `backdrop-blur-md` overlay (`bg-black/60`) blurs and locks the editor while
   the punchline fades into the center in large white text
-- 🔗 Minimalist **Fix my code** link dismisses the blur and unlocks the editor
-- 🔌 Works with a real `POST /api/review` backend **or** falls back to a
-  built-in local review generator, so the app is usable out of the box
+- 🔗 Minimalist **Corriger mon code** link dismisses the blur and unlocks the
+  editor
+- 🤖 Express backend calling **Groq** through an ordered list of models
+  (`qwen/qwen3.8-27b`, `openai/gpt-oss-20b`, `openai/gpt-oss-120b`,
+  `allam-2-7b`) with automatic fallback to the next one when a model is
+  unavailable, plus a built-in local fallback so the app stays usable without
+  an API key
 
 ## 🛠️ Stack
 
 - React 18 (functional components + hooks)
-- TypeScript (strict, no `any`)
+- TypeScript (strict, no `any`) — separate configs for the app and the server
 - Tailwind CSS (fade-in / shimmer keyframes, no custom color tokens)
+- Backend: Express 5 + `groq-sdk` + `cors` + `dotenv`, run through `tsx`
 - Fonts via Google Fonts CDN: **Inter** for the UI, **JetBrains Mono** for code
 - Icons: hand-drawn inline SVG — no icon package to install
 
@@ -30,17 +35,41 @@ in over a blurred editor.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
+```
+
+Backend dependencies (already listed in `package.json`):
+
+```bash
+npm install express cors dotenv groq-sdk
+npm install -D @types/express @types/cors @types/node tsx
+```
+
+Configure the environment, then start the API and the frontend in two
+terminals:
+
+```bash
+cp .env.example .env   # then paste your Groq API key
+npm run server         # http://localhost:3000
+npm run dev            # http://localhost:5173
+```
+
+`.env` template:
+
+```env
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODELS=qwen/qwen3.8-27b,openai/gpt-oss-20b,openai/gpt-oss-120b,allam-2-7b
+PORT=3000
 ```
 
 ### Scripts
 
-| Script             | Description                              |
-| ------------------ | ---------------------------------------- |
-| `npm run dev`      | Start the Vite dev server                |
-| `npm run build`    | Type-check and build for production      |
-| `npm run preview`  | Preview the production build             |
-| `npm run typecheck`| Run the TypeScript compiler only         |
+| Script                | Description                                        |
+| --------------------- | -------------------------------------------------- |
+| `npm run dev`         | Start the Vite dev server (proxies `/api` → :3000) |
+| `npm run server`      | Start the Express review API on port 3000          |
+| `npm run build`       | Type-check app **and** server, then build          |
+| `npm run preview`     | Preview the production build                       |
+| `npm run typecheck`   | Type-check the app and the server                  |
 
 ## 🧩 Components
 
@@ -53,6 +82,8 @@ npm run dev      # http://localhost:5173
 | `src/components/PunchlineOverlay.tsx` | Blurred overlay with the loading state and punchline |
 | `src/components/icons/ModernIcons.tsx` | Hand-drawn stroke SVG icon set                    |
 | `src/index.css`                     | Monochrome base, selection and scrollbars            |
+| `server/server.ts`                  | Express API: CORS, validation and the Groq call      |
+| `server/tsconfig.json`              | Strict Node type-check config for the server         |
 
 ## 🔌 Backend contract
 
@@ -75,5 +106,16 @@ Failure:
 { "error": "Service de mépris indisponible." }
 ```
 
-If the endpoint is unreachable, `reviewApi.ts` answers with a locally
-generated cynical review so the overlay still delivers the punchline.
+The server walks the comma-separated `GROQ_MODELS` list (default
+`qwen/qwen3.8-27b`, `openai/gpt-oss-20b`, `openai/gpt-oss-120b`,
+`allam-2-7b` — all free and available on the key) with a strict system prompt
+(a senior, cold, contemptuous engineer who gives one short verdict and no
+solution). When a model is decommissioned, rate-limited or answers empty, the
+next one in the list is tried automatically; the last working model becomes
+the preferred one for the following requests. Only an auth failure (`401`/
+`403`) stops the chain. If every model fails, the server answers `500` with a
+themed message (`400` when `code` is missing).
+
+If the endpoint is unreachable or answers an error, `reviewApi.ts` falls back
+to a locally generated cynical review so the overlay still delivers the
+punchline.
