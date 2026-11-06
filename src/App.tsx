@@ -4,7 +4,6 @@ import {
   readReviewMessage,
   requestCodeReview,
 } from './api/reviewApi';
-import { DesktopIcons } from './components/DesktopIcons';
 import { ErrorPopup } from './components/ErrorPopup';
 import { MainWindow } from './components/MainWindow';
 import { Taskbar } from './components/Taskbar';
@@ -69,12 +68,10 @@ export default function App(): JSX.Element {
   }, []);
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#008080]">
-      <DesktopIcons />
-
-      {/* `pointer-events-none` lets clicks fall through to the desktop
-          shortcuts underneath; the window itself re-enables them. */}
-      <main className="pointer-events-none relative z-10 flex h-full items-center justify-center px-4 pt-4 pb-[46px]">
+    <div className="flex h-full w-full flex-col overflow-hidden bg-[#008080]">
+      {/* Only the application window is shown: it fills the viewport above
+          the taskbar, no desktop wallpaper or shortcuts behind it. */}
+      <main className="relative z-10 flex min-h-0 flex-1 flex-col pb-[30px]">
         <MainWindow
           code={code}
           onChange={handleCodeChange}
