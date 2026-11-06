@@ -10,13 +10,14 @@ const REVIEW_ENDPOINT = '/api/review';
 const LOCAL_REVIEW_DELAY_MS = 1400;
 
 const LOCAL_REVIEWS: readonly string[] = [
-  "Ce code n'est pas du code, c'est un aveu écrit.",
-  'Votre variable `temp2` a plus de responsabilités que la moitié de vos collègues.',
-  'J\u2019ai vu des choses plus propres dans un cendrier de salle de pause.',
-  'Ce try/catch ne protège rien : il affiche juste votre peur au grand jour.',
-  'Votre code a passé la revue. Le verdict : rejeté avec mépris.',
-  'Aucune documentation, aucun test, aucun espoir. On continue quand même.',
-  'Ce nom de fonction décrit exactement ce qu\u2019il fait. Malheureusement.',
+  'Ce code existe. C’est déjà une décision discutable.',
+  'Rien à signaler, si ce n’est une ambition générale très en dessous de vos prétentions.',
+  'Ni bon ni mauvais : indifférent. C’est le pire des verdicts.',
+  'Tout est là, rien ne brille. Un excellent résumé de votre carrière.',
+  'Votre code ne dérange personne. Peut-être est-ce exactement le problème.',
+  'On pourrait l’améliorer, mais aucun endroit n’offre de prise sans blesser qui que ce soit.',
+  'Syntaxe correcte, âme absente. Le classique intemporel.',
+  'Ce code respire la fiabilité, et surtout l’ennui mortel.',
 ];
 
 function isSuccessResponse(body: unknown): body is ReviewSuccessResponse {
