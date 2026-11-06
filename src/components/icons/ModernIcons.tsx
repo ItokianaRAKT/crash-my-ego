@@ -21,12 +21,3 @@ export function CodeIcon({ className }: ModernIconProps): JSX.Element {
     </svg>
   );
 }
-
-export function TerminalIcon({ className }: ModernIconProps): JSX.Element {
-  return (
-    <svg viewBox="0 0 24 24" className={className} {...STROKE_ATTRIBUTES}>
-      <path d="m4 17 6-6-6-6" />
-      <path d="M12 19h8" />
-    </svg>
-  );
-}
