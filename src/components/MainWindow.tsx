@@ -79,18 +79,6 @@ export function MainWindow({
           Effacer
         </button>
 
-        <span aria-hidden="true" className="mx-1 h-[18px] w-[2px] border-l border-r border-[#808080]" />
-
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={isSubmitDisabled}
-          className="win95-button flex items-center gap-1 font-bold"
-        >
-          <span aria-hidden="true">{isLoading ? '⏳' : '💀'}</span>
-          {isLoading ? 'Calcul du mépris...' : 'Soumettre au mépris'}
-        </button>
-
         <span className="ml-auto hidden text-[11px] text-[#404040] sm:inline">
           Ctrl + Entrée
         </span>
@@ -110,12 +98,21 @@ export function MainWindow({
         />
       </div>
 
-      {/* Status bar */}
+      {/* Status bar — the primary action lives at the bottom right */}
       <div className="mt-[3px] flex items-center gap-2 text-[11px]">
-        <p className="win95-sunken-thin flex-1 truncate px-[4px] py-[1px]">{statusLabel}</p>
-        <p className="win95-sunken-thin px-[4px] py-[1px]">
-          {isLoading ? '💀 Bus occupé' : '🟢 Prêt'}
+        <p className="win95-sunken-thin min-w-0 flex-1 truncate px-[4px] py-[1px]">
+          {statusLabel}
         </p>
+
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={isSubmitDisabled}
+          className="win95-button flex shrink-0 items-center gap-1 font-bold"
+        >
+          <span aria-hidden="true">{isLoading ? '⏳' : '💀'}</span>
+          {isLoading ? 'Calcul du mépris...' : 'Soumettre au mépris'}
+        </button>
       </div>
     </section>
   );
