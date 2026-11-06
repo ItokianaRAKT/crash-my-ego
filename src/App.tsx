@@ -10,17 +10,10 @@ import { MainWindow } from './components/MainWindow';
 import { Taskbar } from './components/Taskbar';
 import type { ReviewStatus } from './types';
 
-/** Title shown in the taskbar and used by the desktop shell. */
 const APPLICATION_TITLE = 'CrashMyEgo - Revue de code.exe';
 
-/** Volume used by the window control click sound, between 0 and 1. */
 const DEFAULT_CLICK_VOLUME = 0.7;
 
-/**
- * Application shell: owns every piece of global state and the asynchronous
- * review submission flow, then renders the desktop, the editor window, the
- * fatal error popup and the taskbar.
- */
 export default function App(): JSX.Element {
   const [code, setCode] = useState<string>('');
   const [status, setStatus] = useState<ReviewStatus>('idle');
@@ -31,7 +24,6 @@ export default function App(): JSX.Element {
 
   const isLoading = status === 'loading';
 
-  // Keep the click sound in sync with the tray volume slider.
   useEffect(() => {
     setClickVolume(volume);
   }, [volume]);
@@ -44,10 +36,6 @@ export default function App(): JSX.Element {
     setCode(nextCode);
   }, []);
 
-  /**
-   * Send the current code to the reviewer and open the crash popup with the
-   * answer. Loading is reflected immediately through the button label.
-   */
   const handleSubmit = useCallback(async (): Promise<void> => {
     if (code.trim().length === 0 || status === 'loading') {
       return;
@@ -64,8 +52,6 @@ export default function App(): JSX.Element {
       setStatus(failedRequest ? 'error' : 'success');
       setIsModalOpen(true);
     } catch (error: unknown) {
-      // Belt and braces: the API client degrades on its own, but a rejected
-      // promise must still surface as a system error instead of a silent UI.
       const fallbackMessage =
         error instanceof Error ? error.message : 'Erreur inconnue du reviewer.';
 
@@ -83,8 +69,6 @@ export default function App(): JSX.Element {
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden bg-[#008080]">
-      {/* Only the application window is shown: it fills the viewport above
-          the taskbar, no desktop wallpaper or shortcuts behind it. */}
       <main className="relative z-10 flex min-h-0 flex-1 flex-col pb-[30px]">
         <MainWindow
           code={code}

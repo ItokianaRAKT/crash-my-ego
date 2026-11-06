@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
- * Global Windows 95 shell styling.
- * Everything here is plain CSS so the retro look does not depend on
- * utility class ordering inside components.
- */
 @layer base {
   html,
   body,
@@ -16,7 +11,6 @@
 
   body {
     margin: 0;
-    /* Classic Windows 95 desktop teal */
     background-color: #008080;
     color: #000000;
     font-family: Tahoma, 'MS Sans Serif', 'Segoe UI', Geneva, Verdana, sans-serif;
@@ -25,7 +19,6 @@
     overflow: hidden;
   }
 
-  /* Disable the browser outline, Windows 95 draws its own focus rect */
   *:focus {
     outline: none;
   }
@@ -36,11 +29,6 @@
 }
 
 @layer components {
-  /*
-   * Generic 3D "raised" bevel used for buttons, window frames and panels.
-   * Top/left are white, bottom/right are grey, with the black/dfdfdf
-   * inner strokes that give Windows 95 its chunky depth.
-   */
   .win95-raised {
     border-style: solid;
     border-width: 2px;
@@ -50,7 +38,6 @@
       inset 1px 1px 0px 0px #dfdfdf;
   }
 
-  /* Pressed / inset variant for input fields and content wells. */
   .win95-sunken {
     border-style: solid;
     border-width: 2px;
@@ -60,21 +47,18 @@
       inset -1px -1px 0px 0px #dfdfdf;
   }
 
-  /* 1px sunken bevel for status bars and the taskbar clock. */
   .win95-sunken-thin {
     border-style: solid;
     border-width: 1px;
     border-color: #808080 #ffffff #ffffff #808080;
   }
 
-  /* 1px raised bevel for tray icons and the Start button. */
   .win95-raised-thin {
     border-style: solid;
     border-width: 1px;
     border-color: #ffffff #808080 #808080 #ffffff;
   }
 
-  /* Classic grey system button. */
   .win95-button {
     background-color: #c0c0c0;
     padding: 3px 12px;
@@ -108,7 +92,6 @@
     cursor: not-allowed;
   }
 
-  /* Title bar gradient shared by every window. */
   .win95-titlebar {
     background: linear-gradient(to right, #000080, #1084d0);
   }
@@ -118,7 +101,6 @@
   }
 }
 
-/* Blinking cursor used inside the editor. */
 @keyframes win95-caret-blink {
   0%,
   49% {
