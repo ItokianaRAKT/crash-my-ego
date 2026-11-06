@@ -1,28 +1,28 @@
-# 💥 CrashMyEgo
+#  CrashMyEgo
 
 A **passive-aggressive code reviewer** dressed up as a clinical, monochrome
 code terminal. Paste your code, hit the button, and let a cynical verdict fade
 in over a blurred editor.
 
-## ✨ Features
+##  Features
 
-- ⚛️ "Laboratory monochrome" theme: pure `#0a0a0a` background, white primary
+-  "Laboratory monochrome" theme: pure `#0a0a0a` background, white primary
   text, muted zinc secondary text, hairline `zinc-900` borders — zero accents
-- 📝 Editor as the center of attention: full-width card, line-number gutter
+-  Editor as the center of attention: full-width card, line-number gutter
   synced with the textarea, live `Ln/Col` status bar, `Ctrl + Enter` submit
-- ⚪ Solid white **Lancer la revue** action button (`bg-white text-black`)
-- 🌫️ Core effect: the review never lands in a box — a full-container
+-  Solid white **Lancer la revue** action button (`bg-white text-black`)
+-  Core effect: the review never lands in a box — a full-container
   `backdrop-blur-md` overlay (`bg-black/60`) blurs and locks the editor while
   the punchline fades into the center in large white text
-- 🔗 Minimalist **Corriger mon code** link dismisses the blur and unlocks the
+-  Minimalist **Corriger mon code** link dismisses the blur and unlocks the
   editor
-- 🤖 Express backend calling **Groq** through an ordered list of models
+-  Express backend calling **Groq** through an ordered list of models
   (`qwen/qwen3.8-27b`, `openai/gpt-oss-20b`, `openai/gpt-oss-120b`,
   `allam-2-7b`) with automatic fallback to the next one when a model is
   unavailable, plus a built-in local fallback so the app stays usable without
   an API key
 
-## 🛠️ Stack
+##  Stack
 
 - React 18 (functional components + hooks)
 - TypeScript (strict, no `any`) — separate configs for the app and the server
@@ -31,7 +31,7 @@ in over a blurred editor.
 - Fonts via Google Fonts CDN: **Inter** for the UI, **JetBrains Mono** for code
 - Icons: hand-drawn inline SVG — no icon package to install
 
-## 🚀 Getting started
+##  Getting started
 
 ```bash
 npm install
@@ -71,7 +71,7 @@ PORT=3000
 | `npm run preview`     | Preview the production build                       |
 | `npm run typecheck`   | Type-check the app and the server                  |
 
-## 🧩 Components
+##  Components
 
 | File                                | Responsibility                                       |
 | ----------------------------------- | ---------------------------------------------------- |
@@ -85,7 +85,7 @@ PORT=3000
 | `server/server.ts`                  | Express API: CORS, validation and the Groq call      |
 | `server/tsconfig.json`              | Strict Node type-check config for the server         |
 
-## 🔌 Backend contract
+##  Backend contract
 
 ```http
 POST /api/review
@@ -120,7 +120,7 @@ If the endpoint is unreachable or answers an error, `reviewApi.ts` falls back
 to a locally generated cynical review so the overlay still delivers the
 punchline.
 
-## 🔒 Security
+##  Security
 
 Hardening based on the [OWASP Top 10](https://owasp.org/Top10/):
 
